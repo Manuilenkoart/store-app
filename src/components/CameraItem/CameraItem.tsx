@@ -15,6 +15,7 @@ import { ICamera } from '../../models/ICamera';
 import RoutesPath from '../../routes';
 
 import { deleteCameraFetch } from '../../store/reducers/CameraActionCreators';
+import { addCameraToShoppingCart } from '../../store/reducers/ShoppingCartSlice';
 import CameraForm from '../CameraForm/CameraForm';
 
 interface CameraItemProps {
@@ -71,6 +72,9 @@ const CameraItem: FC<CameraItemProps> = ({ camera }) => {
               onClick={() => dispatch(deleteCameraFetch(camera))}
             >
               delete
+            </Button>
+            <Button onClick={() => dispatch(addCameraToShoppingCart(camera))}>
+              +
             </Button>
           </CardActions>
         </Card>
