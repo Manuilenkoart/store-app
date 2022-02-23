@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ICamera } from '../../models/ICamera';
 
 // redux toolkit
-const baseUrl = 'http://localhost:3002/products';
+const baseUrl = 'http://localhost:3002/camera';
 export const getCamerasFetch = createAsyncThunk(
   'cameras/getAll',
   async (_, thunkApi) => {

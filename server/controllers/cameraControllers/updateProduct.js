@@ -1,4 +1,5 @@
-const { updateProductDb } = require("../db/mongoActions");
+const { updateProductDb } = require("../../db/mongoCameraActions");
+
 
 const updateProduct = async (req, res) => {
   const {data} = req.body

@@ -1,4 +1,4 @@
-const { getProductByIdDB } = require("../db/mongoActions");
+const { getProductByIdDB } = require("../../db/mongoCameraActions");
 
 const getProductById = async (req, res) => {
   const productId = req.params.id;

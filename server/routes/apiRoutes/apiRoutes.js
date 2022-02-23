@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
-const productsRouter = require("./productsRouter");
+const cameraRouter = require("./cameraRouter");
 
-router.use("/products", productsRouter);
+router.use("/camera", cameraRouter);
 
 module.exports = router;

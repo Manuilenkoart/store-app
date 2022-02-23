@@ -1,12 +1,13 @@
-const postProduct = require("./postProduct");
-const updateProduct = require("./updateProduct");
-const deleteProduct = require("./deleteProduct");
-const getAllProduct = require("./getAllProduct");
-const getProductById = require("./getProductById");
+// camera
+const postCamera = require("./cameraControllers/postProduct");
+const updateCamera = require("./cameraControllers/updateProduct");
+const deleteCamera = require("./cameraControllers/deleteProduct");
+const getAllCamera = require("./cameraControllers/getAllProduct");
+const getCameraById = require("./cameraControllers/getProductById");
 module.exports = {
-  postProduct,
-  updateProduct,
-  deleteProduct,
-  getAllProduct,
-  getProductById,
+  postCamera,
+  updateCamera,
+  deleteCamera,
+  getAllCamera,
+  getCameraById,
 };

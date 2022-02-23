@@ -56,6 +56,9 @@ const Header: FC = () => {
               <NavLink to={RoutesPath.CAMERAS}>
                 <Button variant="contained">Камеры</Button>
               </NavLink>
+              <NavLink to={RoutesPath.FILMS}>
+                <Button variant="contained">Пленки</Button>
+              </NavLink>
               <NavLink to={RoutesPath.ADMINPANEL}>
                 <Button variant="contained">Админка</Button>
               </NavLink>
