@@ -1,7 +1,7 @@
 const { createProduct } = require("../../db/mongoFilmActions");
 
 const postProduct = async (req, res) => {
-  await createProduct(req.body.data).then((data) => {
+  await createProduct(req.body).then((data) => {
     if (data) {
       res.status(201).json(data);
     } else {

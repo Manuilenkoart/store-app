@@ -42,6 +42,14 @@ const Header: FC = () => {
   const selectShoppingCartCameras = useAppSelector(
     state => state.shoppingCartState.cameras,
   );
+  const selectShoppingCartFilmsLength = useAppSelector(
+    state => state.shoppingCartState.films.length,
+  );
+  const selectShoppingCartFilms = useAppSelector(
+    state => state.shoppingCartState.films,
+  );
+  const shoppingCartLength =
+    selectShoppingCartCamerasLength + selectShoppingCartFilmsLength;
 
   return (
     <>
@@ -68,10 +76,7 @@ const Header: FC = () => {
               sx={{ color: 'white' }}
               onClick={() => setIsOpeanDrawer(true)}
             >
-              <StyledBadge
-                badgeContent={selectShoppingCartCamerasLength}
-                color="primary"
-              >
+              <StyledBadge badgeContent={shoppingCartLength} color="primary">
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>
@@ -85,13 +90,23 @@ const Header: FC = () => {
       >
         <ShoppingCartTitle>
           <ShoppingCartIcon sx={{ m: '20px' }} />
-          {selectShoppingCartCamerasLength}{' '}
-          {selectShoppingCartCamerasLength ? 'items' : 'item'} in shop
+          {shoppingCartLength} {shoppingCartLength ? 'items' : 'item'} in shop
         </ShoppingCartTitle>
         <Divider />
 
         {selectShoppingCartCameras.map(camera => (
-          <ShoppingCartItem key={camera._id} camera={camera} />
+          <ShoppingCartItem
+            itemType="camera"
+            key={camera._id}
+            shoppingCart={camera}
+          />
+        ))}
+        {selectShoppingCartFilms.map(film => (
+          <ShoppingCartItem
+            itemType="film"
+            key={film._id}
+            shoppingCart={film}
+          />
         ))}
       </Drawer>
     </>

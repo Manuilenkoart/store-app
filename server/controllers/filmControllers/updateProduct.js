@@ -1,8 +1,7 @@
 const { updateProductDb } = require("../../db/mongoFilmActions");
 
 const updateProduct = async (req, res) => {
-  const {data} = req.body
-  await updateProductDb(data._id, data).then((updatedProduct) => {
+  await updateProductDb(req.body._id, req.body).then((updatedProduct) => {
     if (updatedProduct) {
       res.status(200).json(updatedProduct);
     } else {

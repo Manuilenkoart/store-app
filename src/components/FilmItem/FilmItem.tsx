@@ -1,32 +1,32 @@
+import React, { FC, useState } from 'react';
 import {
   Button,
+  Dialog,
   Card,
   CardActions,
   CardContent,
   CardMedia,
-  Dialog,
   Grid,
   Typography,
 } from '@mui/material';
-import React, { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { IFilm } from '../../models/IFilm';
 import { useAppDispatch } from '../../hooks/reduxHooks';
-import { ICamera } from '../../models/ICamera';
+import { addFilmToShoppingCart } from '../../store/reducers/ShoppingCartSlice';
+import { filmApi } from '../../services/FilmService';
+import FilmForm from '../FilmForm/FilmForm';
 import RoutesPath from '../../routes';
-import { deleteCameraFetch } from '../../store/reducers/CameraActionCreators';
-import { addCameraToShoppingCart } from '../../store/reducers/ShoppingCartSlice';
-import CameraForm from '../CameraForm/CameraForm';
 
-interface CameraItemProps {
-  camera: ICamera;
+interface FilmItemProps {
+  film: IFilm;
 }
-const CameraItem: FC<CameraItemProps> = ({ camera }) => {
+const FilmItem: FC<FilmItemProps> = ({ film }) => {
+  const [deleteFilm] = filmApi.useDeleteFilmMutation();
   const dispatch = useAppDispatch();
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleClickOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+  const handleClickOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
   return (
     <>
       <Grid item>
@@ -42,47 +42,44 @@ const CameraItem: FC<CameraItemProps> = ({ camera }) => {
             <CardMedia
               sx={{ height: '100%', width: 'auto' }}
               component="img"
-              image={camera.url}
-              alt={`${camera.brand} ${camera.model}`}
+              image={film.url}
+              alt={`${film.brand} ${film.model}`}
             />
           </Card>
 
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {camera.brand} {camera.model}
+              {film.brand} {film.model}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Voluptatem, dicta.
             </Typography>
             <Typography gutterBottom variant="body1" component="div">
-              price: {camera.price}$
+              price: {film.price}$
             </Typography>
           </CardContent>
           <CardActions>
-            <Link to={`/${RoutesPath.CAMERAS}/${camera._id}`}>
+            <Link to={`/${RoutesPath.FILMS}/${film._id}`}>
               <Button size="small">Learn More</Button>
             </Link>
             <Button size="small" onClick={handleClickOpen}>
               update
             </Button>
-            <Button
-              size="small"
-              onClick={() => dispatch(deleteCameraFetch(camera))}
-            >
+            <Button size="small" onClick={() => deleteFilm(film)}>
               delete
             </Button>
-            <Button onClick={() => dispatch(addCameraToShoppingCart(camera))}>
+            <Button onClick={() => dispatch(addFilmToShoppingCart(film))}>
               +
             </Button>
           </CardActions>
         </Card>
       </Grid>
-      <Dialog open={open} onClose={handleClose}>
-        <CameraForm camera={camera} OnCloseDialog={handleClose} />
+      <Dialog open={isOpen} onClose={handleClose}>
+        <FilmForm film={film} OnCloseDialog={handleClose} />
       </Dialog>
     </>
   );
 };
 
-export default CameraItem;
+export default FilmItem;

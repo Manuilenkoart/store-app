@@ -5,6 +5,7 @@ import { CardMedia, Divider } from '@mui/material';
 import { deleteCameraFromShoppingCart } from '../../store/reducers/ShoppingCartSlice';
 import { ICamera } from '../../models/ICamera';
 import { useAppDispatch } from '../../hooks/reduxHooks';
+import { IFilm } from '../../models/IFilm';
 
 const ItemContainer = styledComponent.div`
 display: flex;
@@ -16,28 +17,40 @@ const ImgContainer: FC = styledComponent.div`
 width: 100px
 `;
 
+enum ShoppingCartItemTypes {
+  camera = 'camera',
+  film = 'film',
+}
 interface ShoppingCartItemProps {
-  camera: ICamera;
+  shoppingCart: ICamera | IFilm;
+  itemType: string;
 }
 
-const ShoppingCartItem: FC<ShoppingCartItemProps> = ({ camera }) => {
+const ShoppingCartItem: FC<ShoppingCartItemProps> = ({
+  shoppingCart,
+  itemType,
+}) => {
   const dispatch = useAppDispatch();
 
   return (
     <>
       <ItemContainer>
         <ImgContainer>
-          <CardMedia component="img" src={camera.url} />
+          <CardMedia component="img" src={shoppingCart.url} />
         </ImgContainer>
         <div>
           <h3>
-            {camera.brand} {camera.model}
+            {shoppingCart.brand} {shoppingCart.model}
           </h3>
-          <p>price: {camera.price}$</p>
+          <p>price: {shoppingCart.price}$</p>
         </div>
-        <CloseIcon
-          onClick={() => dispatch(deleteCameraFromShoppingCart(camera))}
-        />
+        {itemType === ShoppingCartItemTypes.camera && (
+          <CloseIcon
+            onClick={() =>
+              dispatch(deleteCameraFromShoppingCart(shoppingCart as ICamera))
+            }
+          />
+        )}
       </ItemContainer>
       <Divider />
     </>
