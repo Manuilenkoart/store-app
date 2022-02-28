@@ -2,7 +2,10 @@ import React, { FC } from 'react';
 import styledComponent from 'styled-components';
 import CloseIcon from '@mui/icons-material/Close';
 import { CardMedia, Divider } from '@mui/material';
-import { deleteCameraFromShoppingCart } from '../../store/reducers/ShoppingCartSlice';
+import {
+  deleteCameraFromShoppingCart,
+  deleteFilmFromShoppingCart,
+} from '../../store/reducers/ShoppingCartSlice';
 import { ICamera } from '../../models/ICamera';
 import { useAppDispatch } from '../../hooks/reduxHooks';
 import { IFilm } from '../../models/IFilm';
@@ -48,6 +51,13 @@ const ShoppingCartItem: FC<ShoppingCartItemProps> = ({
           <CloseIcon
             onClick={() =>
               dispatch(deleteCameraFromShoppingCart(shoppingCart as ICamera))
+            }
+          />
+        )}
+        {itemType === ShoppingCartItemTypes.film && (
+          <CloseIcon
+            onClick={() =>
+              dispatch(deleteFilmFromShoppingCart(shoppingCart as IFilm))
             }
           />
         )}

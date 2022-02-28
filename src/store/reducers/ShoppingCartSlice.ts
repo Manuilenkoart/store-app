@@ -30,6 +30,12 @@ const shoppingCartSlice = createSlice({
         camera => camera._id !== action.payload._id,
       );
     },
+    deleteFilmFromShoppingCart: (
+      state: ShoppingCartState,
+      action: PayloadAction<IFilm>,
+    ) => {
+      state.films = state.films.filter(film => film._id !== action.payload._id);
+    },
     addFilmToShoppingCart: (
       state: ShoppingCartState,
       action: PayloadAction<IFilm>,
@@ -42,5 +48,6 @@ export default shoppingCartSlice.reducer;
 export const {
   addCameraToShoppingCart,
   deleteCameraFromShoppingCart,
+  deleteFilmFromShoppingCart,
   addFilmToShoppingCart,
 } = shoppingCartSlice.actions;
