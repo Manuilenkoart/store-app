@@ -12,6 +12,9 @@ const deleteFilm = require("./filmControllers/deleteProduct");
 const getAllFilm = require("./filmControllers/getAllProduct");
 const getFilmById = require("./filmControllers/getProductById");
 
+// auth
+const register = require('./authControllers/authRegister')
+
 module.exports = {
   postCamera,
   updateCamera,
@@ -23,4 +26,5 @@ module.exports = {
   deleteFilm,
   getAllFilm,
   getFilmById,
+  register
 };
