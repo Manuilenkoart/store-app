@@ -1,0 +1,73 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "plugin:import/errors",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "prettier",
+    "plugin:prettier/recommended",
+    "prettier/react"
+  ],
+  "plugins": ["react", "import", "prettier", "jsx-a11y"],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "no-console": 1,
+    "linebreak-style": ["error", "windows"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "jsx-a11y/no-onchange": 0,
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "react/destructuring-assignment": [
+      2,
+      "always",
+      { "ignoreClassFields": true }
+    ],
+    "react/static-property-placement": [1, "static public field"],
+    "react/state-in-constructor": [1, "never"],
+    "react/sort-comp": [
+      2,
+      {
+        "order": [
+          "static-methods",
+          "static-variables",
+          "instance-variables",
+          "lifecycle",
+          "everything-else",
+          "render"
+        ]
+      }
+    ],
+    "no-param-reassign": 0,
+    "no-underscore-dangle":  ["error", { "allow": ["_id"] }] 
+  },
+  "globals": {
+    "window": true,
+    "document": true,
+    "localStorage": true,
+    "FormData": true,
+    "FileReader": true,
+    "Blob": true,
+    "navigator": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+}
