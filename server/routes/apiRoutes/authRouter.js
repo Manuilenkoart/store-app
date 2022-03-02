@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { check } = require('express-validator');
 
-const { register } = require('../../controllers/index');
+const { register, login } = require('../../controllers/index');
 
 router.post(
   '/register',
@@ -14,5 +14,6 @@ router.post(
   ],
   register,
 );
+router.post('/login', login);
 
 module.exports = router;
