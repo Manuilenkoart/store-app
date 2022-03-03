@@ -13,7 +13,7 @@ const generateToken = paramsForToken => {
 
 const authLogin = async (request, response) => {
   try {
-    const { email, password } = request.body;
+    const { email, password } = request.body.data;
     const user = await User.findOne({ email });
     const id = user._id;
 
@@ -30,7 +30,9 @@ const authLogin = async (request, response) => {
     const payload = { password, id };
 
     const token = generateToken(payload);
-    response.status(200).json({ status: 'success', user: user, token: token });
+    const { username, email: emailDb, roles } = user;
+    const userAuth = { username, email: emailDb, roles };
+    response.status(200).json({ user: userAuth, token: token });
   } catch (error) {
     response.status(404).json({
       status: 'error',

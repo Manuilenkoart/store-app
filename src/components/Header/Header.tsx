@@ -2,6 +2,7 @@ import {
   AppBar,
   BadgeProps,
   Container,
+  Dialog,
   Divider,
   Drawer,
   Toolbar,
@@ -17,8 +18,10 @@ import styledComponent from 'styled-components';
 import React, { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import RoutesPath from '../../routes';
-import { useAppSelector } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import ShoppingCartItem from '../ShoppingCartItem/ShoppingCartItem';
+import LoginForm from '../LoginForm/LoginForm';
+import { logout } from '../../store/reducers/Auth/AuthActionCreators';
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -35,7 +38,9 @@ align-items: center;
 `;
 
 const Header: FC = () => {
+  const dispatch = useAppDispatch();
   const [isOpeanDrawer, setIsOpeanDrawer] = useState(false);
+  const [isOpeanLoginForm, setIsOpeanLoginForm] = useState(false);
   const selectShoppingCartCamerasLength = useAppSelector(
     state => state.shoppingCartState.cameras.length,
   );
@@ -50,6 +55,9 @@ const Header: FC = () => {
   );
   const shoppingCartLength =
     selectShoppingCartCamerasLength + selectShoppingCartFilmsLength;
+  const { token } = useAppSelector(state => state.authState);
+
+  const handleCloseLoginForm = () => setIsOpeanLoginForm(false);
 
   return (
     <>
@@ -70,6 +78,18 @@ const Header: FC = () => {
               <NavLink to={RoutesPath.ADMINPANEL}>
                 <Button variant="contained">Админка</Button>
               </NavLink>
+              {token ? (
+                <Button variant="contained" onClick={() => dispatch(logout())}>
+                  Logout
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  onClick={() => setIsOpeanLoginForm(true)}
+                >
+                  Login
+                </Button>
+              )}
             </Stack>
             <IconButton
               aria-label="cart"
@@ -109,6 +129,9 @@ const Header: FC = () => {
           />
         ))}
       </Drawer>
+      <Dialog open={isOpeanLoginForm} onClose={handleCloseLoginForm}>
+        <LoginForm OnCloseDialog={handleCloseLoginForm} />
+      </Dialog>
     </>
   );
 };
