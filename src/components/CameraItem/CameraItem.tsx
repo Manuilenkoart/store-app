@@ -10,11 +10,13 @@ import {
 } from '@mui/material';
 import React, { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { ICamera } from '../../models/ICamera';
+import Roles from '../../models/Roles';
 import RoutesPath from '../../routes';
 import { deleteCameraFetch } from '../../store/reducers/CameraActionCreators';
 import { addCameraToShoppingCart } from '../../store/reducers/ShoppingCartSlice';
+import canManage from '../../utils/canManage';
 import CameraForm from '../CameraForm/CameraForm';
 
 interface CameraItemProps {
@@ -23,6 +25,7 @@ interface CameraItemProps {
 const CameraItem: FC<CameraItemProps> = ({ camera }) => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
+  const userRoles = useAppSelector(state => state.authState.user?.roles);
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -59,19 +62,25 @@ const CameraItem: FC<CameraItemProps> = ({ camera }) => {
               price: {camera.price}$
             </Typography>
           </CardContent>
-          <CardActions>
+          <CardActions
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
+          >
             <Link to={`/${RoutesPath.CAMERAS}/${camera._id}`}>
               <Button size="small">Learn More</Button>
             </Link>
-            <Button size="small" onClick={handleClickOpen}>
-              update
-            </Button>
-            <Button
-              size="small"
-              onClick={() => dispatch(deleteCameraFetch(camera))}
-            >
-              delete
-            </Button>
+            {canManage([Roles.admin], userRoles) && (
+              <>
+                <Button size="small" onClick={handleClickOpen}>
+                  update
+                </Button>
+                <Button
+                  size="small"
+                  onClick={() => dispatch(deleteCameraFetch(camera))}
+                >
+                  delete
+                </Button>
+              </>
+            )}
             <Button onClick={() => dispatch(addCameraToShoppingCart(camera))}>
               +
             </Button>

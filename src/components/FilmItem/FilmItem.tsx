@@ -11,11 +11,13 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { IFilm } from '../../models/IFilm';
-import { useAppDispatch } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { addFilmToShoppingCart } from '../../store/reducers/ShoppingCartSlice';
 import { filmApi } from '../../services/FilmService';
 import FilmForm from '../FilmForm/FilmForm';
 import RoutesPath from '../../routes';
+import Roles from '../../models/Roles';
+import canManage from '../../utils/canManage';
 
 interface FilmItemProps {
   film: IFilm;
@@ -24,6 +26,7 @@ const FilmItem: FC<FilmItemProps> = ({ film }) => {
   const [deleteFilm] = filmApi.useDeleteFilmMutation();
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const userRoles = useAppSelector(state => state.authState.user?.roles);
 
   const handleClickOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
@@ -59,16 +62,24 @@ const FilmItem: FC<FilmItemProps> = ({ film }) => {
               price: {film.price}$
             </Typography>
           </CardContent>
-          <CardActions>
+          <CardActions
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
+          >
             <Link to={`/${RoutesPath.FILMS}/${film._id}`}>
               <Button size="small">Learn More</Button>
             </Link>
-            <Button size="small" onClick={handleClickOpen}>
-              update
-            </Button>
-            <Button size="small" onClick={() => deleteFilm(film)}>
-              delete
-            </Button>
+            {canManage([Roles.admin], userRoles) && (
+              <>
+                <Button size="small" onClick={handleClickOpen}>
+                  update
+                </Button>
+
+                <Button size="small" onClick={() => deleteFilm(film)}>
+                  delete
+                </Button>
+              </>
+            )}
+
             <Button onClick={() => dispatch(addFilmToShoppingCart(film))}>
               +
             </Button>

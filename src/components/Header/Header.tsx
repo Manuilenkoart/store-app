@@ -22,6 +22,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import ShoppingCartItem from '../ShoppingCartItem/ShoppingCartItem';
 import LoginForm from '../LoginForm/LoginForm';
 import { logout } from '../../store/reducers/Auth/AuthActionCreators';
+import Roles from '../../models/Roles';
+import canManage from '../../utils/canManage';
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -56,6 +58,7 @@ const Header: FC = () => {
   const shoppingCartLength =
     selectShoppingCartCamerasLength + selectShoppingCartFilmsLength;
   const { token } = useAppSelector(state => state.authState);
+  const userRoles = useAppSelector(state => state.authState.user?.roles);
 
   const handleCloseLoginForm = () => setIsOpeanLoginForm(false);
 
@@ -75,9 +78,13 @@ const Header: FC = () => {
               <NavLink to={RoutesPath.FILMS}>
                 <Button variant="contained">Пленки</Button>
               </NavLink>
-              <NavLink to={RoutesPath.ADMINPANEL}>
-                <Button variant="contained">Админка</Button>
-              </NavLink>
+
+              {canManage([Roles.admin], userRoles) && (
+                <NavLink to={RoutesPath.ADMINPANEL}>
+                  <Button variant="contained">Админка</Button>
+                </NavLink>
+              )}
+
               {token ? (
                 <Button variant="contained" onClick={() => dispatch(logout())}>
                   Logout
