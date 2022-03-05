@@ -1,9 +1,20 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { IState } from '../models/IState';
 import { IFilm } from '../models/IFilm';
 
 export const filmApi = createApi({
   reducerPath: 'filmApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3002/' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'http://localhost:3002/',
+    prepareHeaders: (headers, { getState }) => {
+      const { token } = (getState() as IState).authState;
+
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   tagTypes: ['Film'],
   endpoints: build => ({
     getAllFilms: build.query<IFilm[], string>({
@@ -14,7 +25,10 @@ export const filmApi = createApi({
         /* eslint-disable */
         result
           ? [
-              ...result.map(({ _id }) => ({ type: 'Film' as const, _id })),
+              ...result.map(({ _id }) => ({
+                type: 'Film' as const,
+                _id,
+              })),
               { type: 'Film', id: 'LIST' },
             ]
           : [{ type: 'Film', id: 'LIST' }],

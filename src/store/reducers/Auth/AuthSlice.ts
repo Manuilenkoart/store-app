@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser, IUserResponse } from '../../../models/IUser';
 import { login, logout } from './AuthActionCreators';
 
-interface AuthState {
+export interface AuthState {
   user: IUser | null;
   token: string | null;
   isLoading: boolean;

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ICamera } from '../../models/ICamera';
+import { ICamera } from '../../../models/ICamera';
 
 // redux toolkit
 const baseUrl = 'http://localhost:3002/camera';

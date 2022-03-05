@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICamera } from '../../models/ICamera';
+import { ICamera } from '../../../models/ICamera';
 import {
   getCamerasFetch,
   addCameraFetch,

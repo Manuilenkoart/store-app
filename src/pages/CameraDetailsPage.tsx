@@ -3,7 +3,7 @@ import React, { FC, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { getCameraDetailsFetch } from '../store/reducers/CameraActionCreators';
+import { getCameraDetailsFetch } from '../store/reducers/Camera/CameraActionCreators';
 
 const DetailsContainer = styled.div`
   width: 300px;

@@ -9,7 +9,7 @@ import { ICamera } from '../../models/ICamera';
 import {
   addCameraFetch,
   updateCameraFetch,
-} from '../../store/reducers/CameraActionCreators';
+} from '../../store/reducers/Camera/CameraActionCreators';
 
 const Container = styled.div`
   display: block;

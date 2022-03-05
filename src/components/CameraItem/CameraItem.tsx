@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { ICamera } from '../../models/ICamera';
 import Roles from '../../models/Roles';
 import RoutesPath from '../../routes';
-import { deleteCameraFetch } from '../../store/reducers/CameraActionCreators';
+import { deleteCameraFetch } from '../../store/reducers/Camera/CameraActionCreators';
 import { addCameraToShoppingCart } from '../../store/reducers/ShoppingCartSlice';
 import canManage from '../../utils/canManage';
 import CameraForm from '../CameraForm/CameraForm';

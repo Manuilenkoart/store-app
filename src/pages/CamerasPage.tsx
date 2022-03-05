@@ -3,7 +3,7 @@ import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import CameraItem from '../components/CameraItem/CameraItem';
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks';
-import { getCamerasFetch } from '../store/reducers/CameraActionCreators';
+import { getCamerasFetch } from '../store/reducers/Camera/CameraActionCreators';
 
 const CamerasGridWrapper = styled.div`
   position: relative;

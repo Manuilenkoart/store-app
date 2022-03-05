@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICamera } from '../../models/ICamera';
 import { IFilm } from '../../models/IFilm';
 
-interface ShoppingCartState {
+export interface ShoppingCartState {
   cameras: ICamera[];
   films: IFilm[];
 }

@@ -14,12 +14,11 @@ const generateToken = paramsForToken => {
 const authLogin = async (request, response) => {
   try {
     const { email, password } = request.body.data;
-    const user = await User.findOne({ email });
-    const id = user._id;
+    const { _id, username, email: emailDb, password: userPasswordDb, roles } = await User.findOne({ email });
 
-    const correctPassword = passwordMatch(password, user.password);
+    const correctPassword = passwordMatch(password, userPasswordDb);
 
-    if (!user || !correctPassword) {
+    if (!_id || !correctPassword) {
       response.status(404).json({
         status: 'error',
         message: error.message,
@@ -27,10 +26,9 @@ const authLogin = async (request, response) => {
       });
     }
 
-    const payload = { password, id };
+    const payload = { password, _id, roles };
 
     const token = generateToken(payload);
-    const { username, email: emailDb, roles } = user;
     const userAuth = { username, email: emailDb, roles };
     response.status(200).json({ user: userAuth, token: token });
   } catch (error) {
