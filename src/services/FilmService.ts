@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { IState } from '../models/IState';
+import { AuthState } from '../store/reducers/Auth/AuthSlice';
 import { IFilm } from '../models/IFilm';
 
 export const filmApi = createApi({
@@ -7,7 +7,9 @@ export const filmApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3002/',
     prepareHeaders: (headers, { getState }) => {
-      const { token } = (getState() as IState).authState;
+      const {
+        authState: { token },
+      } = getState() as { authState: AuthState };
 
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
