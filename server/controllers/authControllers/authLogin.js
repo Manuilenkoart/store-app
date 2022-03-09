@@ -1,15 +1,9 @@
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../../models/userModel');
-const { secret } = require('../../config');
+const generateToken = require('../../utils/generateToken');
 
 const passwordMatch = (password, hash) => bcrypt.compareSync(password, hash);
 
-const generateToken = paramsForToken => {
-  return jwt.sign(paramsForToken, secret, {
-    expiresIn: '30d',
-  });
-};
 
 const authLogin = async (request, response) => {
   try {

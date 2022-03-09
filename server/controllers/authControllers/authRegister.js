@@ -2,6 +2,8 @@ const User = require('../../models/userModel');
 const Role = require('../../models/roleModel');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
+const Roles = require('../../access/roles');
+const generateToken = require('../../utils/generateToken');
 
 const authRegister = async (request, response) => {
   try {
@@ -14,8 +16,8 @@ const authRegister = async (request, response) => {
     }
 
     const user = request.body;
-    const email = user.email;
-    const emailMatch = await User.findOne({ email });
+    const emailForm = user.email;
+    const emailMatch = await User.findOne({ email: emailForm });
 
     if (emailMatch) {
       return response.status(404).json({
@@ -25,7 +27,7 @@ const authRegister = async (request, response) => {
     }
 
     const hashedPassword = bcrypt.hashSync(user.password, 7);
-    const userRole = await Role.findOne({ value: 'USER' });
+    const userRole = await Role.findOne({ value: Roles.user });
     const newUser = new User({
       ...user,
       password: hashedPassword,
@@ -34,10 +36,11 @@ const authRegister = async (request, response) => {
 
     const userToSave = await newUser.save();
 
-    response.status(201).json({
-      status: 'success',
-      user: userToSave,
-    });
+    const {_id, username, password ,email, roles} = userToSave;
+    const userAuth = { username, email, roles };
+    const token = generateToken({password, _id, roles});
+
+    response.status(201).json({ user: userAuth, token: token });
   } catch (error) {
     if (error.code === 11000) {
       response.status(400).json({

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser, IUserResponse } from '../../../models/IUser';
-import { login, logout } from './AuthActionCreators';
+import { login, logout, register } from './AuthActionCreators';
 
 export interface AuthState {
   user: IUser | null;
@@ -50,6 +50,21 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = '';
     },
+
+    // register
+    [register.pending.type]: (state: AuthState) => {
+      state.isLoading = true;
+    },
+    [register.fulfilled.type]: (
+      state: AuthState,
+      action: PayloadAction<IUserResponse>,
+    ) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoading = false;
+      state.error = '';
+    },
+    [register.rejected.type]: setError,
   },
 });
 

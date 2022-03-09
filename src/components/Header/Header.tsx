@@ -24,6 +24,7 @@ import LoginForm from '../LoginForm/LoginForm';
 import { logout } from '../../store/reducers/Auth/AuthActionCreators';
 import Roles from '../../models/Roles';
 import canManage from '../../utils/canManage';
+import RegisterForm from '../RegisterForm/RegisterForm';
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -43,6 +44,8 @@ const Header: FC = () => {
   const dispatch = useAppDispatch();
   const [isOpeanDrawer, setIsOpeanDrawer] = useState(false);
   const [isOpeanLoginForm, setIsOpeanLoginForm] = useState(false);
+  const [isOpeanRegisterForm, setIsOpeanRegisterForm] = useState(false);
+
   const selectShoppingCartCamerasLength = useAppSelector(
     state => state.shoppingCartState.cameras.length,
   );
@@ -61,6 +64,7 @@ const Header: FC = () => {
   const userRoles = useAppSelector(state => state.authState.user?.roles);
 
   const handleCloseLoginForm = () => setIsOpeanLoginForm(false);
+  const handleCloseRegisterForm = () => setIsOpeanRegisterForm(false);
 
   return (
     <>
@@ -90,12 +94,21 @@ const Header: FC = () => {
                   Logout
                 </Button>
               ) : (
-                <Button
-                  variant="contained"
-                  onClick={() => setIsOpeanLoginForm(true)}
-                >
-                  Login
-                </Button>
+                <>
+                  <Button
+                    variant="contained"
+                    onClick={() => setIsOpeanRegisterForm(true)}
+                  >
+                    Register
+                  </Button>
+
+                  <Button
+                    variant="contained"
+                    onClick={() => setIsOpeanLoginForm(true)}
+                  >
+                    Login
+                  </Button>
+                </>
               )}
             </Stack>
             <IconButton
@@ -138,6 +151,9 @@ const Header: FC = () => {
       </Drawer>
       <Dialog open={isOpeanLoginForm} onClose={handleCloseLoginForm}>
         <LoginForm OnCloseDialog={handleCloseLoginForm} />
+      </Dialog>
+      <Dialog open={isOpeanRegisterForm} onClose={handleCloseRegisterForm}>
+        <RegisterForm OnCloseDialog={handleCloseRegisterForm} />
       </Dialog>
     </>
   );
