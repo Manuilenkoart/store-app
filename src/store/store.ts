@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import camerasReducer from './reducers/CameraSlice';
+import shoppingCartReducer from './reducers/ShoppingCartSlice';
 
 // объединение всех reducers
 const rootReducer = combineReducers({
   camerasState: camerasReducer,
+  shoppingCartState: shoppingCartReducer,
 });
 
 export const setupStore = () => {
