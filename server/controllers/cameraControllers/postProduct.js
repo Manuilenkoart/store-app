@@ -1,4 +1,4 @@
-const { createProduct } = require("../db/mongoActions");
+const { createProduct } = require("../../db/mongoCameraActions");
 const postProduct = async (req, res) => {
   await createProduct(req.body.data).then((data) => {
     if (data) {

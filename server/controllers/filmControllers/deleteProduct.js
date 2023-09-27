@@ -1,4 +1,4 @@
-const { deleteProd } = require("../db/mongoActions");
+const { deleteProd } = require("../../db/mongoFilmActions");
 
 const deleteProduct = async (req, res) => {
   try {

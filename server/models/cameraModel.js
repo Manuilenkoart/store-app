@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-const autoIncrement = require("mongoose-auto-increment");
 
 const Schema = mongoose.Schema;
 
-const ProductScheme = new Schema({
+const CameraScheme = new Schema({
   brand: String,
   model: String,
   format: Number,
@@ -12,4 +11,4 @@ const ProductScheme = new Schema({
   price: Number,
 }, {versionKey: false});
 
-module.exports = mongoose.model("Product", ProductScheme);
+module.exports = mongoose.model("Camera", CameraScheme);

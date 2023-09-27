@@ -1,4 +1,4 @@
-const { getAllProductsDb } = require("../db/mongoActions");
+const { getAllProductsDb } = require("../../db/mongoCameraActions");
 const getAllProduct = async (req, res) => {
   getAllProductsDb().then((data) => {
     if (data) {

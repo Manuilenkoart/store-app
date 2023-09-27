@@ -1,4 +1,4 @@
-const ProductModel = require("../models/productsModel");
+const ProductModel = require("../models/filmModel");
 
 const getAllProductsDb = async () => {
   try {

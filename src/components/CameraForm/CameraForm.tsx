@@ -1,4 +1,3 @@
-import { Container } from '@mui/material';
 import Button from '@mui/material/Button/Button';
 import TextField from '@mui/material/TextField/TextField';
 import styled from 'styled-components';
@@ -12,9 +11,14 @@ import {
   updateCameraFetch,
 } from '../../store/reducers/CameraActionCreators';
 
+const Container = styled.div`
+  display: block;
+  margin: 20px 0;
+  text-align: center;
+`;
+
 const FormContainer = styled.div`
   width: 350px;
-  display: flex;
 `;
 
 interface CameraFormProps {
@@ -55,7 +59,7 @@ const CameraForm: FC<CameraFormProps> = ({ camera, OnCloseDialog }) => {
     },
   });
   return (
-    <Container sx={{ padding: '20px 0' }}>
+    <Container>
       {camera?._id ? 'Update' : 'Add'}
       <FormContainer>
         <form onSubmit={formik.handleSubmit}>
@@ -121,7 +125,7 @@ const CameraForm: FC<CameraFormProps> = ({ camera, OnCloseDialog }) => {
           />
           {camera?._id ? (
             <Button
-              sx={{ display: 'block' }}
+              sx={{ display: 'block', margin: 'auto' }}
               color="primary"
               variant="contained"
               type="submit"
@@ -131,7 +135,7 @@ const CameraForm: FC<CameraFormProps> = ({ camera, OnCloseDialog }) => {
             </Button>
           ) : (
             <Button
-              sx={{ display: 'block' }}
+              sx={{ display: 'block', margin: 'auto' }}
               color="primary"
               variant="contained"
               type="submit"
